@@ -1,5 +1,4 @@
 import Form from "./Form";
-import Paragraph from "./Paragraph";
 
 function Content() {
   return (

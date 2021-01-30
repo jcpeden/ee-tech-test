@@ -27,6 +27,7 @@ class Form extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
 
+    // If valid, process form else return an error message
     if (this.validateInputs()) {
       const range = this.rangeBetween();
       const output = this.parseFizzBuzz(range);
@@ -36,6 +37,7 @@ class Form extends React.Component {
     }
   }
 
+  // Check inputs are not empty, are numbers and that start is smaller than end value
   validateInputs() {
     if (
       isNaN(this.state.startValue) ||
@@ -48,6 +50,7 @@ class Form extends React.Component {
     return true;
   }
 
+  // Return range array between two integers
   rangeBetween() {
     const range = [];
 
@@ -58,8 +61,8 @@ class Form extends React.Component {
     return range;
   }
 
+  // Replace specific multiples with strings
   parseFizzBuzz(array) {
-    // Replace specific multiples with strings
     const parsed = array.map((x) => {
       if (x % 15 === 0) {
         return "fizzbuzz";
