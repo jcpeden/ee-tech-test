@@ -1,44 +1,132 @@
-function Form() {
-  return (
-    <div className="form">
-      <h2>Fizz Buzz Application</h2>
-      <form class="form">
-        <div class="form__row">
-          <label for="start-value" class="form__label">
-            Start Value
-          </label>
-          <input
-            required="required"
-            type="text"
-            name="start"
-            id="start-value"
-            class="form__field form__input"
-          />
-        </div>
-        <div class="form__row">
-          <label for="end-value" class="form__label">
-            End Value
-          </label>
-          <input
-            required="required"
-            type="text"
-            name="end"
-            id="end-value"
-            class="form__field form__input"
-          />
-        </div>
-        <div class="form__row">
-          <button class="button button--fizzbuzz">Go!</button>
-        </div>
-      </form>
-      <p class="error" hidden>
-        Something went wrong, please try again
-      </p>
-      <p class="output" hidden>
-        1, 2, 3, 4, fizz
-      </p>
-    </div>
-  );
+import React from "react";
+import Paragraph from "./Paragraph";
+
+class Form extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hideError: true,
+      hideOutput: true,
+      valid: false,
+      startValue: 0,
+      endValue: 0,
+      output: "",
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    if (event.target.name === "start") {
+      this.setState({ startValue: parseInt(event.target.value) });
+    } else {
+      this.setState({ endValue: parseInt(event.target.value) });
+    }
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    if (this.validateInputs()) {
+      const range = this.rangeBetween();
+      const output = this.parseFizzBuzz(range);
+      this.setState({ hideError: true, hideOutput: false, output: output });
+    } else {
+      this.setState({ hideError: false, hideOutput: true });
+    }
+  }
+
+  validateInputs() {
+    if (
+      isNaN(this.state.startValue) ||
+      isNaN(this.state.endValue) ||
+      this.state.startValue > this.state.endValue
+    ) {
+      return false;
+    }
+
+    return true;
+  }
+
+  rangeBetween() {
+    const range = [];
+
+    for (let i = this.state.startValue; i <= this.state.endValue; i++) {
+      range.push(i);
+    }
+
+    return range;
+  }
+
+  parseFizzBuzz(array) {
+    // Replace specific multiples with strings
+    const parsed = array.map((x) => {
+      if (x % 15 === 0) {
+        return "fizzbuzz";
+      } else if (x % 5 === 0) {
+        return "buzz";
+      } else if (x % 3 === 0) {
+        return "fizz";
+      }
+
+      return x;
+    });
+
+    // Convert array to string
+    const string = parsed.toString();
+
+    // Fix whitespace and return
+    const updated = string.replaceAll(",", ", ");
+
+    return updated;
+  }
+
+  render() {
+    return (
+      <div className="form">
+        <h2>{this.props.title}</h2>
+        <form className="form" onSubmit={this.handleSubmit}>
+          <div className="form__row">
+            <label htmlFor="start" className="form__label">
+              Start Value
+            </label>
+            <input
+              required
+              type="number"
+              name="start"
+              id="start-value"
+              className="form__field form__input"
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="form__row">
+            <label htmlFor="start" className="form__label">
+              End Value
+            </label>
+            <input
+              required
+              type="number"
+              name="end"
+              id="end-value"
+              className="form__field form__input"
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="form__row">
+            <input type="submit" value="Submit" className="button" />
+          </div>
+        </form>
+
+        <Paragraph
+          hide={this.state.hideError}
+          isError="true"
+          content="Please check your inputs are valid and try again"
+        />
+
+        <Paragraph hide={this.state.hideOutput} content={this.state.output} />
+      </div>
+    );
+  }
 }
 
 export default Form;
