@@ -76,12 +76,7 @@ class Form extends React.Component {
     });
 
     // Convert array to string
-    const string = parsed.toString();
-
-    // Fix whitespace and return
-    const updated = string.replaceAll(",", ", ");
-
-    return updated;
+    return parsed.join(", ");
   }
 
   render() {

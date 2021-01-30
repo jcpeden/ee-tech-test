@@ -1,5 +1,5 @@
 import Form from "../components/Form";
-import { render, fireEvent, getByRole } from "@testing-library/react";
+import { screen, render, fireEvent } from "@testing-library/react";
 
 // Render new instance in every test to prevent leaking state
 const setup = () => {
@@ -15,21 +15,7 @@ const setup = () => {
   };
 };
 
-test("It should update start value when end value input changes", () => {
-  const { startValueInput } = setup();
-  fireEvent.change(startValueInput, { target: { value: "12" } });
-
-  expect(startValueInput.value).toBe("12");
-});
-
-test("It should update end value when end value input changes", () => {
-  const { endValueInput } = setup();
-  fireEvent.change(endValueInput, { target: { value: "25" } });
-
-  expect(endValueInput.value).toBe("25");
-});
-
-test("It should error if user enters invalid start/end value data", () => {
+test("It should display an error message if start value is greater than end value", () => {
   const { submit, startValueInput, endValueInput } = setup();
 
   // Setup initial values
@@ -39,22 +25,45 @@ test("It should error if user enters invalid start/end value data", () => {
   // Trigger submit
   fireEvent.click(submit);
 
-  // Expect error output to be shown
-  expect(getByRole("aria-errormessage")).toBeVisible();
-});
-
-test("It should display an error message if start value is greater than end value", () => {
-  expect(true).toBe(false);
+  // Expect error message to be shown
+  expect(screen.getByRole("aria-errormessage")).toBeVisible();
 });
 
 test("It should output a string of numbers, replacing multiples of 15 with 'fizzbuzz'", () => {
-  expect(true).toBe(false);
+  const { submit, startValueInput, endValueInput } = setup();
+
+  // Setup initial values
+  fireEvent.change(startValueInput, { target: { value: "14" } });
+  fireEvent.change(endValueInput, { target: { value: "16" } });
+
+  // Trigger submit
+  fireEvent.click(submit);
+
+  expect(screen.getByRole("aria-expanded")).toContainHTML("14, fizzbuzz, 16");
 });
 
 test("It should output a string of numbers, replacing multiples of 5 (but not 15) with 'buzz'", () => {
-  expect(true).toBe(false);
+  const { submit, startValueInput, endValueInput } = setup();
+
+  // Setup initial values
+  fireEvent.change(startValueInput, { target: { value: "9" } });
+  fireEvent.change(endValueInput, { target: { value: "11" } });
+
+  // Trigger submit
+  fireEvent.click(submit);
+
+  expect(screen.getByRole("aria-expanded")).toContainHTML("fizz, buzz, 11");
 });
 
 test("It should output a string of numbers, replacing multiples of 3 (but not 15) with 'fizz'", () => {
-  expect(true).toBe(false);
+  const { submit, startValueInput, endValueInput } = setup();
+
+  // Setup initial values
+  fireEvent.change(startValueInput, { target: { value: "3" } });
+  fireEvent.change(endValueInput, { target: { value: "5" } });
+
+  // Trigger submit
+  fireEvent.click(submit);
+
+  expect(screen.getByRole("aria-expanded")).toContainHTML("fizz, 4, buzz");
 });
