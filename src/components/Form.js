@@ -76,7 +76,7 @@ class Form extends React.Component {
     });
 
     // Convert array to string
-    return parsed.join(", ");
+    return parsed.join(" ");
   }
 
   render() {

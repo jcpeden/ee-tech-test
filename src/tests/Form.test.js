@@ -29,41 +29,17 @@ test("It should display an error message if start value is greater than end valu
   expect(screen.getByRole("aria-errormessage")).toBeVisible();
 });
 
-test("It should output a string of numbers, replacing multiples of 15 with 'fizzbuzz'", () => {
+test("It should output a string of numbers, replacing multiples of 15 with 'fizzbuzz, 5 with 'buzz' and 3 with 'fizz' respectively", () => {
   const { submit, startValueInput, endValueInput } = setup();
 
   // Setup initial values
-  fireEvent.change(startValueInput, { target: { value: "14" } });
-  fireEvent.change(endValueInput, { target: { value: "16" } });
+  fireEvent.change(startValueInput, { target: { value: "1" } });
+  fireEvent.change(endValueInput, { target: { value: "20" } });
 
   // Trigger submit
   fireEvent.click(submit);
 
-  expect(screen.getByRole("aria-expanded")).toContainHTML("14, fizzbuzz, 16");
-});
-
-test("It should output a string of numbers, replacing multiples of 5 (but not 15) with 'buzz'", () => {
-  const { submit, startValueInput, endValueInput } = setup();
-
-  // Setup initial values
-  fireEvent.change(startValueInput, { target: { value: "9" } });
-  fireEvent.change(endValueInput, { target: { value: "11" } });
-
-  // Trigger submit
-  fireEvent.click(submit);
-
-  expect(screen.getByRole("aria-expanded")).toContainHTML("fizz, buzz, 11");
-});
-
-test("It should output a string of numbers, replacing multiples of 3 (but not 15) with 'fizz'", () => {
-  const { submit, startValueInput, endValueInput } = setup();
-
-  // Setup initial values
-  fireEvent.change(startValueInput, { target: { value: "3" } });
-  fireEvent.change(endValueInput, { target: { value: "5" } });
-
-  // Trigger submit
-  fireEvent.click(submit);
-
-  expect(screen.getByRole("aria-expanded")).toContainHTML("fizz, 4, buzz");
+  expect(screen.getByRole("aria-expanded")).toContainHTML(
+    "1 2 fizz 4 buzz fizz 7 8 fizz buzz 11 fizz 13 14 fizzbuzz 16 17 fizz 19 buzz"
+  );
 });
