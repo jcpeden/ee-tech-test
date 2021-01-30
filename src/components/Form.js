@@ -77,8 +77,18 @@ class Form extends React.Component {
       return x;
     });
 
+    // Count values in parsed array for report
+    const fizzCount = parsed.filter((x) => x === "fizz").length;
+    const buzzCount = parsed.filter((x) => x === "buzz").length;
+    const fizzBuzzCount = parsed.filter((x) => x === "fizzbuzz").length;
+    const luckyCount = parsed.filter((x) => x === "lucky").length;
+    const integerCount =
+      parsed.length - fizzCount - buzzCount - fizzBuzzCount - luckyCount;
+
     // Convert array to string
-    return parsed.join(" ");
+    const string = parsed.join(" ");
+
+    return `${string} fizz: ${fizzCount} buzz: ${buzzCount} fizzbuzz: ${fizzBuzzCount} lucky: ${luckyCount} integer: ${integerCount}`;
   }
 
   render() {

@@ -29,7 +29,7 @@ test("It should display an error message if start value is greater than end valu
   expect(screen.getByRole("aria-errormessage")).toBeVisible();
 });
 
-test("It should output a string of numbers, replacing targeted strings with fizz, fizzbuzz, buzz or lucky", () => {
+test("It should output a string of numbers, replacing targeted strings with fizz, fizzbuzz, buzz or lucky. Include report", () => {
   const { submit, startValueInput, endValueInput } = setup();
 
   // Setup initial values
@@ -40,6 +40,6 @@ test("It should output a string of numbers, replacing targeted strings with fizz
   fireEvent.click(submit);
 
   expect(screen.getByRole("aria-expanded")).toContainHTML(
-    "1 2 lucky 4 buzz fizz 7 8 fizz buzz 11 fizz lucky 14 fizzbuzz 16 17 fizz 19 buzz"
+    "1 2 lucky 4 buzz fizz 7 8 fizz buzz 11 fizz lucky 14 fizzbuzz 16 17 fizz 19 buzz fizz: 4 buzz: 3 fizzbuzz: 1 lucky: 2 integer: 10"
   );
 });
