@@ -17,7 +17,7 @@ class Form extends React.Component {
   }
 
   handleChange(event) {
-    if (event.target.name === "start") {
+    if (event.target.name === "start-value") {
       this.setState({ startValue: parseInt(event.target.value) });
     } else {
       this.setState({ endValue: parseInt(event.target.value) });
@@ -90,26 +90,26 @@ class Form extends React.Component {
         <h2>{this.props.title}</h2>
         <form className="form" onSubmit={this.handleSubmit}>
           <div className="form__row">
-            <label htmlFor="start" className="form__label">
+            <label htmlFor="start-value" className="form__label">
               Start Value
             </label>
             <input
               required
               type="number"
-              name="start"
+              name="start-value"
               id="start-value"
               className="form__field form__input"
               onChange={this.handleChange}
             />
           </div>
           <div className="form__row">
-            <label htmlFor="start" className="form__label">
+            <label htmlFor="end-value" className="form__label">
               End Value
             </label>
             <input
               required
               type="number"
-              name="end"
+              name="end-value"
               id="end-value"
               className="form__field form__input"
               onChange={this.handleChange}
