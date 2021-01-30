@@ -100,6 +100,7 @@ class Form extends React.Component {
               id="start-value"
               className="form__field form__input"
               onChange={this.handleChange}
+              value={this.state.startValue}
             />
           </div>
           <div className="form__row">
@@ -113,20 +114,31 @@ class Form extends React.Component {
               id="end-value"
               className="form__field form__input"
               onChange={this.handleChange}
+              value={this.state.endValue}
             />
           </div>
           <div className="form__row">
-            <input type="submit" value="Submit" className="button" />
+            <input
+              aria-label="submit"
+              type="submit"
+              value="Submit"
+              className="button"
+            />
           </div>
         </form>
 
         <Paragraph
           hide={this.state.hideError}
           isError="true"
+          role="aria-errormessage"
           content="Please check your inputs are valid and try again"
         />
 
-        <Paragraph hide={this.state.hideOutput} content={this.state.output} />
+        <Paragraph
+          role="aria-expanded"
+          hide={this.state.hideOutput}
+          content={this.state.output}
+        />
       </div>
     );
   }

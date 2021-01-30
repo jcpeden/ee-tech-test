@@ -9,6 +9,7 @@ class Paragraph extends React.Component {
   render() {
     return this.props.hide ? null : (
       <p
+        role={this.props.role ? this.props.role : ""}
         className={this.props.isError ? "error" : null}
         dangerouslySetInnerHTML={{ __html: this.props.content }}
       />
