@@ -61,10 +61,12 @@ class Form extends React.Component {
     return range;
   }
 
-  // Replace specific multiples with strings
+  // Replace specific array items with new strings
   parseFizzBuzz(array) {
     const parsed = array.map((x) => {
-      if (x % 15 === 0) {
+      if (x.toString().indexOf("3") > -1) {
+        return "lucky";
+      } else if (x % 15 === 0) {
         return "fizzbuzz";
       } else if (x % 5 === 0) {
         return "buzz";
